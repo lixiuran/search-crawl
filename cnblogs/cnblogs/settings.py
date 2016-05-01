@@ -27,7 +27,7 @@ DEPTH_LIMIT = 10
 # Configure a delay for requests for the same website (default: 0)
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-#DOWNLOAD_DELAY=3
+DOWNLOAD_DELAY=3
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN=16
 #CONCURRENT_REQUESTS_PER_IP=16
@@ -98,9 +98,9 @@ LOG_FILE  = '/tmp/scrapy.log'
 
 # start MySQL database configure setting
 MYSQL_HOST = 'localhost'
-MYSQL_DBNAME = 'cnblogsdb'
-MYSQL_USER = 'root'
-MYSQL_PASSWD = 'qq139547'
+MYSQL_DBNAME = 'crawl_db'
+MYSQL_USER = 'crawl_user'
+MYSQL_PASSWD = 'crawl_user@139547'
 # end of MySQL database configure setting
 
 USER_AGENTS = [
