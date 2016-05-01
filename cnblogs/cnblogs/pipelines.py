@@ -72,14 +72,16 @@ class MySQLStoreCnblogsPipeline(object):
             conn.execute("""
                 update cnblogs_tb set title = %s, description = %s, modify_time = %s,view_count = %s, comment_count = %s where item_id = %s
             """, (item['title'], item['desc'], now,item['view_count'], item['comment_count'], linkmd5id))
-            print 'Update Success : ' + item['title']
+
+            logging.log(logging.INFO, 'Update Success : ' + item['title'])
+
         else:
             conn.execute("""
             insert into cnblogs_tb (item_id, title, description, link, list_url, create_time, post_time, post_author, view_count, comment_count)
             values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """, (linkmd5id, item['title'], item['desc'], item['link'], item['list_url'], now, item['post_time'], item['post_author'], item['view_count'],item['comment_count']))
 
-            print 'Insert Success : '+item['title']
+            logging.log(logging.INFO, 'Insert Success : ' + item['title'])
 
             #print """
             #    insert into cnblogs_tb(item_id, title, desc, link, list_url, create_time)
