@@ -64,28 +64,28 @@ class MySQLStoreCnblogsPipeline(object):
         #print linkmd5id
         now = datetime.utcnow().replace(microsecond=0).isoformat(' ')
         conn.execute("""
-                select 1 from cnblogsinfo where linkmd5id = %s
+                select 1 from cnblogs_tb where item_id = %s
         """, (linkmd5id, ))
         ret = conn.fetchone()
 
         if ret:
             conn.execute("""
-                update cnblogsinfo set title = %s, description = %s, link = %s, listUrl = %s, updated = %s where linkmd5id = %s
-            """, (item['title'], item['desc'], item['link'], item['listUrl'], now, linkmd5id))
-            print 'Update Success : '+item['title']
-            #print """
-            #    update cnblogsinfo set title = %s, description = %s, link = %s, listUrl = %s, updated = %s where linkmd5id = %s
-            #""", (item['title'], item['desc'], item['link'], item['listUrl'], now, linkmd5id)
+                update cnblogs_tb set title = %s, description = %s, modify_time = %s,view_count = %s, comment_count = %s where item_id = %s
+            """, (item['title'], item['desc'], now,item['view_count'], item['comment_count'], linkmd5id))
+            print 'Update Success : ' + item['title']
         else:
             conn.execute("""
-            insert into cnblogsinfo(linkmd5id, title, description, link, listUrl, updated)
-            values(%s, %s, %s, %s, %s, %s)
-            """, (linkmd5id, item['title'], item['desc'], item['link'], item['listUrl'], now))
+            insert into cnblogs_tb (item_id, title, description, link, list_url, create_time, post_time, post_author, view_count, comment_count)
+            values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, (linkmd5id, item['title'], item['desc'], item['link'], item['list_url'], now, item['post_time'], item['post_author'], item['view_count'],item['comment_count']))
+
             print 'Insert Success : '+item['title']
+
             #print """
-            #    insert into cnblogsinfo(linkmd5id, title, description, link, listUrl, updated)
+            #    insert into cnblogs_tb(item_id, title, desc, link, list_url, create_time)
             #    values(%s, %s, %s, %s, %s, %s)
-            #""", (linkmd5id, item['title'], item['desc'], item['link'], item['listUrl'], now)
+            #""", (linkmd5id, item['title'], item['desc'], item['link'], item['list_url'], now)
+
     #获取url的md5编码
     def _get_linkmd5id(self, item):
         #url进行md5处理，为避免重复采集设计

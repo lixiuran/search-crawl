@@ -10,10 +10,13 @@ import scrapy
 
 class CnblogsItem(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy.Field()
-    linkmd5id = scrapy.Field()
-    title = scrapy.Field()
-    link = scrapy.Field()
-    desc = scrapy.Field()
-    listUrl = scrapy.Field()
+    item_id  = scrapy.Field()
+    title    = scrapy.Field()
+    link     = scrapy.Field()
+    desc     = scrapy.Field()
+    list_url = scrapy.Field()
+    post_time   = scrapy.Field()
+    post_author = scrapy.Field()
+    view_count  = scrapy.Field()
+    comment_count = scrapy.Field()
     pass

@@ -41,17 +41,31 @@ class CnblogsSpider(CrawlSpider):
         postTitle = response.css('div.day div.postTitle')
         #print "=============length======="
         postCon = response.css('div.c_b_p_desc')
+        postDesc = response.css('div.day div.postDesc')
         #标题、url和描述的结构是一个松散的结构，后期可以改进
         for index in range(len(postTitle)):
             item = CnblogsItem()
             item['title'] = postTitle[index].css("a").xpath('text()').extract()[0]
             #print item['title'] + "***************\r\n"
             item['link'] = postTitle[index].css('a').xpath('@href').extract()[0]
-            item['listUrl'] = base_url
+            item['list_url'] = base_url
             try:
                 item['desc'] = postCon[index].xpath('text()').extract()[0]
             except Exception:
                 item['desc'] = ''
+            try:
+                tmp = postDesc[index].xpath('text()').extract()[0]
+                arr = tmp.split(' ')
+                item['post_time'] = arr[2]+' '+arr[3] + ':00'
+                item['post_author'] = arr[4]
+
+                m = re.match(r".*\((\d+)\).*", arr[5])
+                item['view_count'] = m.group(1)
+
+                m2 = re.match(r".*\((\d+)\).*", arr[6])
+                item['comment_count'] = m2.group(1)
+            except Exception:
+                print 123
             #print base_url + "********\n"
             items.append(item)
             #print repr(item).decode("unicode-escape") + '\n'
