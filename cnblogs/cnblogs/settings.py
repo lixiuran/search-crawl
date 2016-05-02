@@ -16,7 +16,7 @@ NEWSPIDER_MODULE = 'cnblogs.spiders'
 
 COMMANDS_MODULE = 'cnblogs.commands'
 
-DEPTH_LIMIT = 10
+DEPTH_LIMIT = 20
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'cnblogs (+http://www.yourdomain.com)'

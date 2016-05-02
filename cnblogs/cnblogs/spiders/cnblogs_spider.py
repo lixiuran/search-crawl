@@ -26,6 +26,7 @@ class CnblogsSpider(CrawlSpider):
     ]
     # 定义爬取URL的规则，并指定回调函数为parse_item
     rules = [
+        Rule(sle(allow=("/cate/(.*)")),follow=True),
         Rule(sle(allow=("/(.*)/category/(\d+)\.html")),follow=True),
         Rule(sle(allow=("/[a-zA-Z0-9-]{4,}/(.*?)")),follow=True,callback='parse_item'),
         Rule(sle(allow=("/[a-zA-Z0-9-]{4,}/default.html\?page=\d{1,}")),follow=True,callback='parse_item')

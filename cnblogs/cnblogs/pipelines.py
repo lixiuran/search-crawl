@@ -64,27 +64,27 @@ class MySQLStoreCnblogsPipeline(object):
         #print linkmd5id
         now = datetime.utcnow().replace(microsecond=0).isoformat(' ')
         conn.execute("""
-                select 1 from cnblogs_tb where item_id = %s
+                select 1 from cd_cnblogs where item_id = %s
         """, (linkmd5id, ))
         ret = conn.fetchone()
 
         if ret:
             conn.execute("""
-                update cnblogs_tb set title = %s, description = %s, modify_time = %s,view_count = %s, comment_count = %s where item_id = %s
+                update cd_cnblogs set title = %s, description = %s, modify_time = %s,view_count = %s, comment_count = %s where item_id = %s
             """, (item['title'], item['desc'], now,item['view_count'], item['comment_count'], linkmd5id))
 
             logging.log(logging.INFO, 'Update Success : ' + item['title'])
 
         else:
             conn.execute("""
-            insert into cnblogs_tb (item_id, title, description, link, list_url, create_time, post_time, post_author, view_count, comment_count)
+            insert into cd_cnblogs (item_id, title, description, link, list_url, create_time, post_time, post_author, view_count, comment_count)
             values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """, (linkmd5id, item['title'], item['desc'], item['link'], item['list_url'], now, item['post_time'], item['post_author'], item['view_count'],item['comment_count']))
 
             logging.log(logging.INFO, 'Insert Success : ' + item['title'])
 
             #print """
-            #    insert into cnblogs_tb(item_id, title, desc, link, list_url, create_time)
+            #    insert into cd_cnblogs(item_id, title, desc, link, list_url, create_time)
             #    values(%s, %s, %s, %s, %s, %s)
             #""", (linkmd5id, item['title'], item['desc'], item['link'], item['list_url'], now)
 
