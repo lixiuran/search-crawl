@@ -16,7 +16,7 @@ NEWSPIDER_MODULE = 'cnblogs.spiders'
 
 COMMANDS_MODULE = 'cnblogs.commands'
 
-DEPTH_LIMIT = 20
+#DEPTH_LIMIT = 20
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'cnblogs (+http://www.yourdomain.com)'
@@ -94,7 +94,7 @@ ITEM_PIPELINES = {
 #HTTPCACHE_STORAGE='scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 LOG_LEVEL = 'INFO'
-LOG_FILE  = '/tmp/scrapy.log'
+LOG_FILE  = '/tmp/cnblogs.log'
 
 # start MySQL database configure setting
 MYSQL_HOST = 'localhost'
