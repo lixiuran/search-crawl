@@ -28,6 +28,8 @@ class CnblogsSpider(CrawlSpider):
     rules = [
         Rule(sle(allow=("/cate/(.*)")),follow=True),
         Rule(sle(allow=("/(.*)/category/(\d+)\.html")),follow=True),
+        Rule(sle(allow=("/(.*)/p/(\d+)\.html")),follow=True),
+        Rule(sle(allow=("/(.*)/archive/(\d+)/(\d+)\.html")),follow=True),
         Rule(sle(allow=("/[a-zA-Z0-9-]{4,}/(.*?)")),follow=True,callback='parse_item'),
         Rule(sle(allow=("/[a-zA-Z0-9-]{4,}/default.html\?page=\d{1,}")),follow=True,callback='parse_item')
     ]
@@ -61,12 +63,18 @@ class CnblogsSpider(CrawlSpider):
                 item['post_author'] = arr[4]
 
                 m = re.match(r".*\((\d+)\).*", arr[5])
-                item['view_count'] = m.group(1)
+                if m:
+                    item['view_count'] = m.group(1)
+                else:
+                    item['view_count'] = 0
 
                 m2 = re.match(r".*\((\d+)\).*", arr[6])
-                item['comment_count'] = m2.group(1)
+                if m2:
+                    item['comment_count'] = m2.group(1)
+                else:
+                    item['comment_count'] = 0
             except Exception:
-                print 123
+                print item
             #print base_url + "********\n"
             items.append(item)
             #print repr(item).decode("unicode-escape") + '\n'
